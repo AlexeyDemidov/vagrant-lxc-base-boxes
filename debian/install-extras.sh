@@ -22,10 +22,11 @@ PACKAGES+=" ${ADDPACKAGES}"
 if [ $DISTRIBUTION = 'ubuntu' ]; then
   PACKAGES+=' software-properties-common'
 fi
-if [ $RELEASE != 'raring' ] && [ $RELEASE != 'saucy' ] && [ $RELEASE != 'trusty' ] && [ $RELEASE != 'wily' ] ; then
+if [ $RELEASE != 'raring' ] && [ $RELEASE != 'saucy' ] && [ $RELEASE != 'trusty' ] && [ $RELEASE != 'wily' ] \
+  && [ $RELEASE != 'bionic' ]; then
   PACKAGES+=' nfs-common'
 fi
-if [ $RELEASE != 'stretch' ] ; then
+if [ $RELEASE != 'stretch' ] && [ $RELEASE != 'bionic' ] && [ $RELEASE != 'buster' ]; then
   PACKAGES+=' python-software-properties'
 fi
 utils.lxc.attach apt-get update
@@ -63,7 +64,8 @@ if [ $CHEF = 1 ]; then
     log "Installing Chef"
     cat > ${ROOTFS}/tmp/install-chef.sh << EOF
 #!/bin/sh
-curl -L https://www.opscode.com/chef/install.sh -k | sudo bash
+wget https://omnitruck.chef.io/install.sh && bash ./install.sh -v 14 && rm install.sh
+# curl -L https://www.opscode.com/chef/install.sh -k | sudo bash
 EOF
     chmod +x ${ROOTFS}/tmp/install-chef.sh
     utils.lxc.attach /tmp/install-chef.sh

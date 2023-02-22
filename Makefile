@@ -1,5 +1,5 @@
-UBUNTU_BOXES= precise quantal raring saucy trusty utopic vivid wily xenial
-DEBIAN_BOXES= squeeze wheezy jessie stretch sid
+UBUNTU_BOXES= precise quantal raring saucy trusty utopic vivid wily xenial bionic
+DEBIAN_BOXES= squeeze wheezy jessie stretch sid buster
 CENTOS_BOXES= 6 7
 FEDORA_BOXES= rawhide 23 22 21 20 19
 TODAY=$(shell date -u +"%Y-%m-%d")
@@ -28,7 +28,7 @@ $(DEBIAN_BOXES): CONTAINER = "vagrant-base-${@}-$(ARCH)"
 $(DEBIAN_BOXES): PACKAGE = "output/${TODAY}/vagrant-lxc-${@}-$(ARCH).box"
 $(DEBIAN_BOXES):
 	@mkdir -p $$(dirname $(PACKAGE))
-	@sudo -E ./mk-debian.sh debian $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
+	sudo -E ./mk-debian.sh debian $(@) $(ARCH) $(CONTAINER) $(PACKAGE)
 	@sudo chmod +rw $(PACKAGE)
 	@sudo chown ${USER}: $(PACKAGE)
 $(CENTOS_BOXES): CONTAINER = "vagrant-base-centos-${@}-$(ARCH)"

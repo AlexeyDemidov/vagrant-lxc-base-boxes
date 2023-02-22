@@ -26,7 +26,8 @@ fi
 
 # If we got to this point, we need to create the container
 log "Creating container..."
-if [ $RELEASE = 'raring' ] || [ $RELEASE = 'wily' ] || [ $RELEASE = 'xenial' ]; then
+if [ $RELEASE = 'raring' ] || [ $RELEASE = 'wily' ] || [ $RELEASE = 'xenial' ] ||\
+  [ $RELEASE = 'bionic' ]; then
   utils.lxc.create -t ubuntu -- \
                    --release ${RELEASE} \
                    --arch ${ARCH}
@@ -52,8 +53,7 @@ else
 fi
 if [ ${DISTRIBUTION} = 'fedora' ] ||\
    [ ${DISTRIBUTION} = 'ubuntu' -a ${RELEASE} = 'wily' ] ||\
-   [ ${DISTRIBUTION} = 'debian' -a ${RELEASE} = 'jessie' ] ||\
-   [ ${DISTRIBUTION} = 'debian' -a ${RELEASE} = 'stretch' ]
+   [ ${DISTRIBUTION} = 'debian' -a ${RELEASE} = 'jessie' ]
 then
   # Improve systemd support:
   # - The fedora template does it but the fedora images from the download
